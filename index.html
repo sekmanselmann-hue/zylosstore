@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZylosStore</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+
+background:
+radial-gradient(circle at 15% 20%, rgba(255,215,0,.12), transparent 30%),
+radial-gradient(circle at 85% 80%, rgba(255,215,0,.10), transparent 30%),
+repeating-linear-gradient(
+45deg,
+rgba(0,0,0,.02) 0px,
+rgba(0,0,0,.02) 1px,
+transparent 1px,
+transparent 22px
+),
+linear-gradient(135deg,#fff,#f8f8f8);
+}
+
+/* HEADER */
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:30px 8%;
+}
+
+.logo{
+font-family:'Cinzel',serif;
+font-size:40px;
+font-weight:800;
+color:#FFD700;
+letter-spacing:2px;
+text-shadow:0 0 10px rgba(255,215,0,.3);
+}
+
+nav{
+display:flex;
+gap:15px;
+}
+
+nav a{
+text-decoration:none;
+color:#b8860b;
+font-weight:700;
+padding:10px 16px;
+border-radius:12px;
+transition:.3s;
+}
+
+nav a:hover{
+background:#FFD700;
+color:#000;
+}
+
+/* HERO */
+.hero{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:50px 8%;
+gap:40px;
+min-height:70vh;
+}
+
+.left{
+flex:1;
+}
+
+h1{
+font-size:60px;
+line-height:70px;
+}
+
+.gold{
+color:#FFD700;
+display:block;
+}
+
+.desc{
+margin-top:20px;
+color:#555;
+font-size:18px;
+max-width:600px;
+}
+
+.buttons{
+margin-top:30px;
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:14px 28px;
+border-radius:14px;
+font-weight:700;
+text-decoration:none;
+}
+
+.primary{
+background:#FFD700;
+color:#000;
+}
+
+.secondary{
+border:2px solid #FFD700;
+color:#b8860b;
+}
+
+/* CODE BOX */
+.right{
+flex:1;
+display:flex;
+justify-content:center;
+}
+
+.code-box{
+width:420px;
+padding:35px;
+background:#fff;
+border-radius:25px;
+border:1px solid rgba(255,215,0,.3);
+box-shadow:0 10px 30px rgba(0,0,0,.05);
+display:flex;
+flex-direction:column;
+gap:15px;
+align-items:center;
+}
+
+.ticket{
+font-size:50px;
+}
+
+input{
+width:100%;
+height:55px;
+padding:0 15px;
+border-radius:12px;
+border:1px solid #ddd;
+font-size:16px;
+outline:none;
+}
+
+.user-check{
+width:100%;
+display:flex;
+gap:10px;
+}
+
+.user-check input{
+flex:1;
+}
+
+#checkUser{
+width:90px;
+background:#111;
+color:#FFD700;
+border:2px solid #FFD700;
+border-radius:10px;
+font-weight:800;
+cursor:pointer;
+transition:.2s;
+}
+
+#checkUser:hover{
+background:#FFD700;
+color:#000;
+transform:scale(1.05);
+}
+
+#userResult{
+text-align:center;
+margin-top:10px;
+}
+
+#userResult img{
+width:90px;
+height:90px;
+border-radius:18px;
+border:2px solid #FFD700;
+margin-bottom:8px;
+display:none;
+}
+
+#status{
+font-weight:600;
+color:#333;
+}
+
+/* FEATURES */
+.features{
+padding:60px 8%;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+}
+
+.card{
+background:#fff;
+padding:25px;
+border-radius:18px;
+border:1px solid rgba(255,215,0,.2);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.icon{
+font-size:35px;
+color:#FFD700;
+margin-bottom:10px;
+}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+.hero{
+flex-direction:column;
+text-align:center;
+}
+.features{
+grid-template-columns:1fr;
+}
+h1{
+font-size:45px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">ZYLOSSTORE</div>
+<nav>
+<a href="#">Kod Kullan</a>
+<a href="#">Sipariş</a>
+</nav>
+</header>
+
+<section class="hero">
+
+<div class="left">
+<h1>ZylosStore ile <span class="gold">Anında Teslimat</span></h1>
+<p class="desc">
+Roblox ürünlerini hızlı ve güvenli şekilde teslim al. 7/24 sistem aktif.
+</p>
+
+<div class="buttons">
+<a class="btn primary" href="#">Kod Kullan</a>
+<a class="btn secondary" href="#">Sipariş Takip</a>
+</div>
+</div>
+
+<div class="right">
+
+<div class="code-box">
+
+<div class="ticket">🎟️</div>
+<h3>Kod Kullan</h3>
+
+<input type="text" placeholder="Kod Gir">
+
+<div class="user-check">
+<input id="username" type="text" placeholder="Roblox Kullanıcı Adı">
+<button id="checkUser">Kontrol</button>
+</div>
+
+<div id="userResult">
+<img id="userAvatar">
+<div id="status"></div>
+</div>
+
+<button style="width:100%;height:55px;border:none;border-radius:12px;background:#FFD700;font-weight:800;cursor:pointer;">
+Kod Kontrol
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="features">
+
+<div class="card">
+<div class="icon">⚡</div>
+<h3>Anında Teslimat</h3>
+</div>
+
+<div class="card">
+<div class="icon">🛡️</div>
+<h3>Güvenli Sistem</h3>
+</div>
+
+<div class="card">
+<div class="icon">📦</div>
+<h3>Sipariş Takibi</h3>
+</div>
+
+<div class="card">
+<div class="icon">💬</div>
+<h3>7/24 Destek</h3>
+</div>
+
+</section>
+
+<script>
+<script>
+document.querySelector("button[style]").addEventListener("click", async () => {
+
+const username = document.getElementById("username").value.trim();
+const codeInput = document.querySelector('input[placeholder="Kod Gir"]').value.trim();
+
+const status = document.getElementById("status");
+const avatar = document.getElementById("userAvatar");
+
+if(!username){
+status.textContent = "Kullanıcı adı girin";
+avatar.style.display = "none";
+return;
+}
+
+if(!codeInput){
+status.textContent = "Kod girin";
+return;
+}
+
+status.textContent = "Kontrol ediliyor...";
+
+try{
+
+// ROBLOX USER CHECK
+const res = await fetch("https://users.roblox.com/v1/usernames/users",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+usernames:[username],
+excludeBannedUsers:false
+})
+});
+
+const data = await res.json();
+
+if(!data.data || data.data.length===0){
+status.textContent = "Kullanıcı bulunamadı ❌";
+avatar.style.display="none";
+return;
+}
+
+const user = data.data[0];
+
+// AVATAR
+const imgRes = await fetch(
+`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${user.id}&size=100x100&format=Png`
+);
+
+const imgData = await imgRes.json();
+
+const img = imgData.data?.[0]?.imageUrl;
+
+avatar.src = img;
+avatar.style.display="block";
+
+/* DEMO KOD SİSTEMİ */
+const validCodes = ["ZYLOS10","FREE100","VIP2026"];
+
+if(validCodes.includes(codeInput)){
+status.innerHTML = `<b>${user.name}</b><br>Kod geçerli ✅`;
+}else{
+status.innerHTML = `<b>${user.name}</b><br>Geçersiz kod ❌`;
+}
+
+}catch(e){
+status.textContent="Hata oluştu";
+avatar.style.display="none";
+}
+
+});
+</script>
+</script>
+
+</body>
+</html>
