@@ -279,7 +279,7 @@ Roblox ürünlerini hızlı ve güvenli şekilde teslim al. 7/24 sistem aktif.
 <div class="ticket">🎟️</div>
 <h3>Kod Kullan</h3>
 
-<input type="text" placeholder="Kod Gir">
+<input type="text" id="codeInput" placeholder="Kod Gir">
 
 <div class="user-check">
 <input id="username" type="text" placeholder="Roblox Kullanıcı Adı">
@@ -291,7 +291,7 @@ Roblox ürünlerini hızlı ve güvenli şekilde teslim al. 7/24 sistem aktif.
 <div id="status"></div>
 </div>
 
-<button style="width:100%;height:55px;border:none;border-radius:12px;background:#FFD700;font-weight:800;cursor:pointer;">
+<button id="checkCode" style="width:100%;height:55px;border:none;border-radius:12px;background:#FFD700;font-weight:800;cursor:pointer;">
 Kod Kontrol
 </button>
 
@@ -324,81 +324,62 @@ Kod Kontrol
 </div>
 
 </section>
-
 <script>
-<script>
-document.querySelector("button[style]").addEventListener("click", async () => {
+const API = "https://solitary-frog-9ccb.sekmanselmann.workers.dev";
+let lastUser = null;
 
-const username = document.getElementById("username").value.trim();
-const codeInput = document.querySelector('input[placeholder="Kod Gir"]').value.trim();
+// Kullanıcı kontrol
+document.getElementById("checkUser").addEventListener("click", async () => {
+    const username = document.getElementById("username").value.trim();
+    const avatar = document.getElementById("userAvatar");
+    const status = document.getElementById("status");
 
-const status = document.getElementById("status");
-const avatar = document.getElementById("userAvatar");
+    if(!username){
+        status.textContent="Kullanıcı adı girin";
+        avatar.style.display="none";
+        return;
+    }
 
-if(!username){
-status.textContent = "Kullanıcı adı girin";
-avatar.style.display = "none";
-return;
-}
+    status.textContent="Kontrol ediliyor...";
+    avatar.style.display="none";
 
-if(!codeInput){
-status.textContent = "Kod girin";
-return;
-}
-
-status.textContent = "Kontrol ediliyor...";
-
-try{
-
-// ROBLOX USER CHECK
-const res = await fetch("https://users.roblox.com/v1/usernames/users",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-usernames:[username],
-excludeBannedUsers:false
-})
+    try{
+        const res = await fetch(API+"/check-user", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({username})
+        });
+        const data = await res.json();
+        if(!data.found){
+            status.textContent="Kullanıcı bulunamadı ❌";
+            avatar.style.display="none";
+            lastUser = null;
+            return;
+        }
+        lastUser = data;
+        avatar.src = data.avatar;
+        avatar.style.display="block";
+        status.textContent = data.name + " bulundu ✅";
+    }catch(e){
+        status.textContent="Hata oluştu ❌";
+    }
 });
 
-const data = await res.json();
-
-if(!data.data || data.data.length===0){
-status.textContent = "Kullanıcı bulunamadı ❌";
-avatar.style.display="none";
-return;
-}
-
-const user = data.data[0];
-
-// AVATAR
-const imgRes = await fetch(
-`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${user.id}&size=100x100&format=Png`
-);
-
-const imgData = await imgRes.json();
-
-const img = imgData.data?.[0]?.imageUrl;
-
-avatar.src = img;
-avatar.style.display="block";
-
-/* DEMO KOD SİSTEMİ */
-const validCodes = ["ZYLOS10","FREE100","VIP2026"];
-
-if(validCodes.includes(codeInput)){
-status.innerHTML = `<b>${user.name}</b><br>Kod geçerli ✅`;
-}else{
-status.innerHTML = `<b>${user.name}</b><br>Geçersiz kod ❌`;
-}
-
-}catch(e){
-status.textContent="Hata oluştu";
-avatar.style.display="none";
-}
-
+// Kod kontrol
+document.getElementById("checkCode").addEventListener("click", () => {
+    const code = document.getElementById("codeInput").value.trim();
+    const status = document.getElementById("status");
+    if(!lastUser){
+        status.textContent="Önce kullanıcı kontrol et ❌";
+        return;
+    }
+    const validCodes = ["ZYLOS10","FREE100","VIP2026"];
+    if(validCodes.includes(code)){
+        status.innerHTML = `<b>${lastUser.name}</b><br>Kod geçerli ✅`;
+    } else {
+        status.innerHTML = `<b>${lastUser.name}</b><br>Kod geçersiz ❌`;
+    }
 });
 </script>
-</script>
-
 </body>
 </html>
